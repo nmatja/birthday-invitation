@@ -54,7 +54,7 @@ export function RSVPModal() {
         throw error
       }
 
-      alert(`Thank you ${formData.name}! Your RSVP has been submitted. 🎉`)
+      alert(`🎉 Your RSVP has been submitted. 🎉`)
       setIsOpen(false)
       setFormData({ name: "", attending: "", accommodation: "" })
     } catch (error) {
