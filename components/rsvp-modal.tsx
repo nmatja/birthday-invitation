@@ -22,6 +22,7 @@ interface RSVPData {
   name: string
   attending: string
   accommodation: string
+  plus_one: string
 }
 
 export function RSVPModal() {
@@ -29,6 +30,7 @@ export function RSVPModal() {
     name: "",
     attending: "",
     accommodation: "",
+    plus_one: "",
   })
   const [isOpen, setIsOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -47,6 +49,7 @@ export function RSVPModal() {
           name: formData.name,
           attending: formData.attending === "yes",
           accommodation: formData.attending === "yes" ? formData.accommodation || "none" : null,
+          plus_one: formData.attending === "yes" ? formData.plus_one === "yes" : false,
         },
       ])
 
@@ -56,7 +59,7 @@ export function RSVPModal() {
 
       alert(`Thank you ${formData.name}! Your RSVP has been submitted. 🎉`)
       setIsOpen(false)
-      setFormData({ name: "", attending: "", accommodation: "" })
+      setFormData({ name: "", attending: "", accommodation: "", plus_one: "" })
     } catch (error) {
       console.error("Error submitting RSVP:", error)
       setError("Failed to submit RSVP. Please try again.")
@@ -116,23 +119,43 @@ export function RSVPModal() {
           </div>
 
           {formData.attending === "yes" && (
-            <div className="space-y-2">
-              <Label htmlFor="accommodation">Accommodation Preference</Label>
-              <Select
-                value={formData.accommodation}
-                onValueChange={(value) => setFormData({ ...formData, accommodation: value })}
-                disabled={isSubmitting}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select your preference" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="none">Just for the party</SelectItem>
-                  <SelectItem value="camping">Camping with tent 🏕️</SelectItem>
-                  <SelectItem value="sleepover">Sleeping over indoors 🏠</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            <>
+              <div className="space-y-2">
+                <Label htmlFor="accommodation">Accommodation Preference</Label>
+                <Select
+                  value={formData.accommodation}
+                  onValueChange={(value) => setFormData({ ...formData, accommodation: value })}
+                  disabled={isSubmitting}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select your preference" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="none">Just for the party</SelectItem>
+                    <SelectItem value="camping">Camping with tent 🏕️</SelectItem>
+                    <SelectItem value="sleepover">Sleeping over indoors 🏠</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-3">
+                <Label>Bringing a +1?</Label>
+                <RadioGroup
+                  value={formData.plus_one}
+                  onValueChange={(value) => setFormData({ ...formData, plus_one: value })}
+                  disabled={isSubmitting}
+                >
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="yes" id="plus-one-yes" />
+                    <Label htmlFor="plus-one-yes">Yes, bringing someone! 👫</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="no" id="plus-one-no" />
+                    <Label htmlFor="plus-one-no">Just me 🙋‍♂️</Label>
+                  </div>
+                </RadioGroup>
+              </div>
+            </>
           )}
 
           {error && <div className="text-red-500 text-sm text-center">{error}</div>}
