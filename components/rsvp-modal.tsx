@@ -54,7 +54,7 @@ export function RSVPModal() {
         throw error
       }
 
-      alert(`🎉 Your RSVP has been submitted. 🎉`)
+      alert(`Thank you ${formData.name}! Your RSVP has been submitted. 🎉`)
       setIsOpen(false)
       setFormData({ name: "", attending: "", accommodation: "" })
     } catch (error) {
@@ -70,9 +70,9 @@ export function RSVPModal() {
       <DialogTrigger asChild>
         <Button
           size="lg"
-          className="bg-primary hover:bg-primary/90 text-primary-foreground text-xl px-12 py-6 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200 border-2 border-primary/50"
+          className="bg-yellow-500 hover:bg-yellow-600 text-black text-lg px-8 py-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200 border-2 border-yellow-400 max-w-sm w-full"
         >
-          🎂 Let Me Know You're Coming! 🎂
+          🎂 Let me know you're coming! 🎂
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
